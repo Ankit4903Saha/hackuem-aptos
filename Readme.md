@@ -90,13 +90,6 @@ The test case `test_use_some_coins` performs the following actions:
 4. Withdraws 5 NFTs.
 5. Burns the withdrawn NFTs.
 
-## Errors
-
-- **ERR_BALANCE_NOT_EXISTS**: Raised when attempting to perform an operation on an address with no existing balance.
-- **ERR_BALANCE_EXISTS**: Raised when attempting to create a balance for an address that already has one.
-- **EINSUFFICIENT_BALANCE**: Raised when there are not enough NFTs in the balance for a withdrawal.
-- **EALREADY_HAS_BALANCE**: Raised when there is an attempt to deposit more NFTs than allowed.
-- **EEQUAL_ADDR**: Raised when attempting to transfer NFTs to the same address.
 
 ## Configuration
 
