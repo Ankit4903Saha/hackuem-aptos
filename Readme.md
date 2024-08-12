@@ -1,12 +1,109 @@
-# NFT World:
+# NFT Wallet Module
 
-contract address: 0x0dc80a9f9c33215a41a19b15635659ea6380734df94b3ea5d6ecbe0910fc2cc8
+This module provides basic functionality for managing non-fungible tokens (NFTs) on the Aptos blockchain. It includes operations for minting, burning, depositing, withdrawing, and transferring NFTs. Additionally, it supports balance checks and ensures proper balance management.
 
-# Project Title
-NFT-World on Aptos
+## Overview
 
-# Project Description
-NFT-World is a smart contract built using the Move programming language and deployed on the Aptos blockchain. This project aims to create a decentralized platform where users can mint, trade, and manage unique Non-Fungible Tokens (NFTs) within a versatile and secure environment. By leveraging the advanced features of the Aptos blockchain, NFT-World ensures low transaction fees, high throughput, and a seamless user experience. This platform is designed to be highly customizable, allowing developers and creators to define unique attributes and functionalities for their NFTs, making it suitable for various use cases, from digital art to gaming assets.
+The `nft-addr` module implements the following features:
 
-# Project Vision
-The vision of NFT-World is to empower creators and collectors by providing a decentralized and user-friendly platform for NFT creation and exchange. We aim to foster a vibrant community where creativity meets technology, enabling new forms of digital ownership and interaction. By building on the Aptos blockchain, NFT-World strives to set a new standard in the NFT space, offering scalability, security, and innovation. Our goal is to bridge the gap between traditional digital content and blockchain technology, making NFTs accessible to everyone while ensuring the integrity and uniqueness of digital assets.
+- **Minting**: Create new NFTs with a specified value.
+- **Burning**: Remove NFTs from existence.
+- **Balance Management**: Create and manage balances for addresses.
+- **Depositing & Withdrawing**: Transfer NFTs between balances and manage balances of individual accounts.
+- **Transferring**: Move NFTs from one address to another.
+
+## Installation and Setup
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/your-repo/nft-wallet-module.git
+   cd nft-wallet-module
+   ```
+
+2. **Set Up Dependencies**
+
+   Ensure you have the Aptos CLI and Move CLI installed. The `nft-wallet-module` relies on the Aptos framework for core functionalities.
+
+   ```bash
+   aptos move repo init
+   ```
+
+   Update the `Cargo.toml` with the Aptos framework dependency:
+
+   ```toml
+   [dependencies.AptosFramework]
+   git = "https://github.com/aptos-labs/aptos-core.git"
+   rev = "mainnet"
+   subdir = "aptos-move/framework/aptos-framework"
+   ```
+
+3. **Build the Module**
+
+   Use the Move CLI to compile the module:
+
+   ```bash
+   move build
+   ```
+
+## Usage
+
+### Functions
+
+- **mint(val: u64) -> NFT**  
+  Create a new NFT with the specified value.
+
+- **burn(coin: NFT)**  
+  Remove the specified NFT.
+
+- **create_balancce(acc: &signer)**  
+  Initialize a balance for the given address.
+
+- **balance_exists(acc_addr: address) -> bool**  
+  Check if a balance exists for the given address.
+
+- **balance(owner: address) -> u64**  
+  Retrieve the balance of NFTs for the given address.
+
+- **deposit(acc_addr: address, token: NFT)**  
+  Deposit an NFT into the balance of the specified address.
+
+- **withdraw(acc: address, value: u64) -> NFT**  
+  Withdraw a specified amount of NFTs from the balance of the address.
+
+- **transfer(from: &signer, to: address, amount: u64)**  
+  Transfer NFTs from one address to another.
+
+### Testing
+
+The module includes a test function to verify its operations. To run the tests, use:
+
+```bash
+move test
+```
+
+The test case `test_use_some_coins` performs the following actions:
+
+1. Mints 10 NFTs.
+2. Creates a balance for an address.
+3. Deposits 10 NFTs into the balance.
+4. Withdraws 5 NFTs.
+5. Burns the withdrawn NFTs.
+
+## Errors
+
+- **ERR_BALANCE_NOT_EXISTS**: Raised when attempting to perform an operation on an address with no existing balance.
+- **ERR_BALANCE_EXISTS**: Raised when attempting to create a balance for an address that already has one.
+- **EINSUFFICIENT_BALANCE**: Raised when there are not enough NFTs in the balance for a withdrawal.
+- **EALREADY_HAS_BALANCE**: Raised when there is an attempt to deposit more NFTs than allowed.
+- **EEQUAL_ADDR**: Raised when attempting to transfer NFTs to the same address.
+
+## Configuration
+
+The module's addresses and dependencies are configured in the `Cargo.toml` file:
+
+```toml
+[addresses]
+nft-addr = '0x0dc80a9f9c33215a41a19b15635659ea6380734df94b3ea5d6ecbe0910fc2cc8'
+```
+
